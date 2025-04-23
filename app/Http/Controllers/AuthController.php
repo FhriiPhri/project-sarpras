@@ -118,4 +118,10 @@ class AuthController extends Controller
         
         return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
     }
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['login', 'loginPost', 'register', 'registerPost']]);
+        $this->middleware('guest')->only('login', 'register'); // Mengambil middleware guest
+    }
 }

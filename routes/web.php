@@ -4,19 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 // Auth Routes
 Route::middleware('guest')->group(function () {
@@ -34,3 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
     Route::delete('/profile/delete', [AuthController::class, 'deleteProfile'])->name('profile.delete');
 });
+
+// Default route for users who are authenticated, redirect them to dashboard
+Route::get('/', function () {
+    return redirect()->route('dashboard');
+})->middleware('auth');
