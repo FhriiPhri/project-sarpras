@@ -10,13 +10,6 @@
             <a href="{{ route('profile.edit') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow transition">
                 Edit Profil
             </a>
-            <form action="{{ route('profile.delete') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg shadow transition">
-                    Hapus Akun
-                </button>
-            </form>
         </div>
     </div>
 
@@ -37,7 +30,7 @@
             </div>
         </div>
 
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <div class="bg-gray-50 p-6 rounded-lg shadow transition duration-300 ease-in-out hover:shadow-lg">
             <h3 class="text-lg font-semibold text-blue-700 mb-5">Informasi Akun</h3>
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2">
                 <div>
@@ -50,11 +43,11 @@
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Dibuat Pada</p>
-                    <p class="font-medium text-gray-800">{{ Auth::user()->created_at->format('j F Y - H:i') }}</p>
+                    <p class="font-medium text-gray-800">{{ Auth::user()->created_at->format('j F Y - H.i') }} WIB</p>
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Terakhir Di Update</p>
-                    <p class="font-medium text-gray-800">{{ Auth::user()->updated_at->format('j F Y - H:i') }}</p>
+                    <p class="font-medium text-gray-800">{{ Auth::user()->updated_at->format('j F Y - H.i') }} WIB</p>
                 </div>
             </div>
         </div>

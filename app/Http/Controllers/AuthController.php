@@ -141,17 +141,22 @@ class AuthController extends Controller
         return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
 
-    public function deleteProfile(Request $request)
+    public function deleteProfile($id)
     {
-        $user = Auth::user();
-        
-        Auth::logout();
+        // Pastikan hanya admin yang bisa menghapus user lain
+        if (Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized');
+        }
+
+        // Cegah admin menghapus dirinya sendiri lewat dashboard
+        if (Auth::id() == $id) {
+            return back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri dari sini.');
+        }
+
+        $user = User::findOrFail($id);
         $user->delete();
-        
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        
-        return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
+
+        return back()->with('success', 'User berhasil dihapus.');
     }
 
     public function __construct()

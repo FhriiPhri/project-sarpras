@@ -7,28 +7,21 @@
     <h1 class="text-2xl font-semibold text-gray-800 mb-6">
         Selamat Datang, {{ Auth::user()->name }}! 👋👋
     </h1>
-
-    <div class="space-y-3 text-gray-700">
-        <p><strong>Nama :</strong> {{ Auth::user()->name }}</p>
-        <p><strong>Username :</strong> {{ Auth::user()->username }}</p>
-        <p><strong>Email :</strong> {{ Auth::user()->email }}</p>
-        <p><strong>Dibuat Pada :</strong> {{ Auth::user()->created_at->format('j F Y - H:i') }} WIB</p>
-    </div>
-
-    <div class="mt-8">
+    
+    <div class="mb-20">
         <a href="{{ route('profile') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow transition">
             Lihat Detail Profil
         </a>
     </div>
-
-    <div class="mt-20 flex justify-between items-center">
-        <button onclick="toggleModal('modalAddUser')" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg shadow">
-            + Tambah User
-        </button>
-    </div>
-
+    
+    
     <div class="mt-10">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">Seluruh User</h2>
+        <h2 class="text-4xl text-center font-semibold text-gray-800 mb-4">Seluruh User</h2>
+        <div class="mt-10 mb-5 flex justify-between items-center">
+            <button onclick="toggleModal('modalAddUser')" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg shadow">
+                + Tambah User
+            </button>
+        </div>
 
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white border border-gray-300 text-sm">
@@ -37,6 +30,7 @@
                         <th class="px-4 py-2 border-b">#</th>
                         <th class="px-4 py-2 border-b">Nama</th>
                         <th class="px-4 py-2 border-b">Username</th>
+                        <th class="px-4 py-2 border-b">Role</th>
                         <th class="px-4 py-2 border-b">Email</th>
                         <th class="px-4 py-2 border-b">Bergabung Pada</th>
                         <th class="px-4 py-2 border-b">Aksi</th>
@@ -48,16 +42,31 @@
                             <td class="px-4 py-2 border-b">{{ $index + 1 }}</td>
                             <td class="px-4 py-2 border-b">{{ $user->name }}</td>
                             <td class="px-4 py-2 border-b">{{ $user->username }}</td>
+                            <td class="px-4 py-2 border-b">{{ $user->role }}</td>
                             <td class="px-4 py-2 border-b">{{ $user->email }}</td>
-                            <td class="px-4 py-2 border-b">{{ $user->created_at->format('j F Y - H:i') }}</td>
-                            <td class="px-4 py-2 border-b space-x-2">
-                                <button onclick="toggleModal('modalEditUser{{ $user->id }}')" class="text-blue-600 hover:underline">Edit</button>
-                                <form action="{{ route('profile.delete', $user->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Yakin ingin menghapus user ini?')">Delete</button>
-                                </form>
-                            </td>
+                            <td class="px-4 py-2 border-b">{{ $user->created_at->format('j F Y - H.i') }} WIB</td>
+                            <td class="px-4 py-2 border-b">
+                                <div class="flex gap-2">
+                                    <button 
+                                        onclick="toggleModal('modalEditUser{{ $user->id }}')" 
+                                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded transition"
+                                    >
+                                        Edit
+                                    </button>
+                            
+                                    <form action="{{ route('profile.delete', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button 
+                                            type="submit" 
+                                            class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded transition"
+                                            onclick="return confirm('Yakin ingin menghapus user ini?')"
+                                        >
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>                            
                         </tr>
 
                         <!-- Modal Edit User -->
@@ -69,9 +78,9 @@
                                     @method('PUT')
                                     <input type="hidden" name="id" value="{{ $user->id }}">
                                     
-                                    <input type="text" name="name" value="{{ $user->name }}" class="w-full mb-3 px-4 py-2 border rounded" required>
-                                    <input type="text" name="username" value="{{ $user->username }}" class="w-full mb-3 px-4 py-2 border rounded" required>
-                                    <input type="email" name="email" value="{{ $user->email }}" class="w-full mb-3 px-4 py-2 border rounded" required>
+                                    <input type="text" name="name" value="{{ $user->name }}" class="w-full mb-3 px-4 py-2 border rounded" placeholder="{{ $user->name }}" required>
+                                    <input type="text" name="username" value="{{ $user->username }}" class="w-full mb-3 px-4 py-2 border rounded" placeholder="{{ $user->username }}" required>
+                                    <input type="email" name="email" value="{{ $user->email }}" class="w-full mb-3 px-4 py-2 border rounded" placeholder="{{ $user->email }}" required>
                                     <input type="password" name="password" placeholder="Password (opsional)" class="w-full mb-3 px-4 py-2 border rounded">
 
                                     <div class="flex justify-end mt-4">

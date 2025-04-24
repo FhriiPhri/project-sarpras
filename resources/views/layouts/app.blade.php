@@ -20,7 +20,7 @@
         <div class="container mx-auto px-5 py-4 flex justify-between items-center">
             <a href="/dashboard" class="text-2xl font-bold text-blue-600">SarprasTBSystem</a>
             <div class="flex items-center gap-4">
-                <a href="{{ route('profile') }}" class="text-gray-800 hover:text-blue-600 font-medium">
+                <a href="{{ route('profile') }}" class="duration-300 text-gray-800 hover:text-blue-600 font-medium">
                     {{ Auth::user()->name ?? 'Guest' }}
                 </a>
                 @auth
