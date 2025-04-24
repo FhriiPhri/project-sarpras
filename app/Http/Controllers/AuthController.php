@@ -41,6 +41,26 @@ class AuthController extends Controller
         return redirect()->route('dashboard')->with('success', 'Registration successful!');
     }
 
+    public function addUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'role' => 'user',
+        ]);
+
+        return back()->with('success', 'User berhasil ditambahkan.');
+    }
+
     public function login()
     {
         return view('auth.login');
@@ -55,17 +75,27 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
-            return redirect()->route('dashboard')->with('success', 'Login successful!');
+
+            // Cek role setelah berhasil login
+            if (Auth::user()->role !== 'admin') {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Akses web ini hanya diperbolehkan untuk admin.',
+                ]);
+            }
+
+            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email atau password salah.',
         ]);
     }
 
     public function dashboard()
     {
-        return view('dashboard');
+        $users = User::all();
+        return view('dashboard', compact('users'));
     }
 
     public function logout(Request $request)

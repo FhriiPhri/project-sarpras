@@ -6,8 +6,8 @@
 <div class="flex items-center justify-center px-4">
     <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <div class="text-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Welcome Back</h2>
-            <p class="text-gray-600">Please login to continue</p>
+            <h2 class="text-2xl font-bold text-gray-800">Selamat Datang</h2>
+            <p class="text-gray-600">Web Sarpras <strong>SMK Taruna Bhakti</strong></p>
         </div>
 
         @if($errors->any())
@@ -29,7 +29,7 @@
         <form method="POST" action="{{ route('login.post') }}" class="space-y-5">
             @csrf
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
                 <input type="email" id="email" name="email" value="{{ old('email') }}"
                     class="px-5 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required autofocus>
             </div>
@@ -45,7 +45,6 @@
                     <input type="checkbox" name="remember" class="mr-2">
                     Remember me
                 </label>
-                <a href="#" class="text-blue-600 hover:underline">Forgot password?</a>
             </div>
 
             <button type="submit"
@@ -53,11 +52,6 @@
                 Login
             </button>
         </form>
-
-        <div class="mt-6 text-center text-sm text-gray-600">
-            Don't have an account?
-            <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Sign Up</a>
-        </div>
     </div>
 </div>
 @endsection

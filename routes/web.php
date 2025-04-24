@@ -23,17 +23,18 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [AuthController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
-    Route::delete('/profile/delete', [AuthController::class, 'deleteProfile'])->name('profile.delete');
+    Route::delete('/profile/delete/{id}', [AuthController::class, 'deleteProfile'])->name('profile.delete');
 });
 
-// Default route for users who are authenticated, redirect them to dashboard
+// Admin Dashboard Route (without middleware, but still can check role in controller)
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+Route::post('/adduser', [AuthController::class, 'addUser'])->name('user.post');
+
+// Default route
 Route::get('/', function () {
     return redirect()->route('dashboard');
-})->middleware('auth');
-
-Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
+});
