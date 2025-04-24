@@ -2,147 +2,63 @@
 
 @section('title', 'My Profile')
 @section('content')
-<div class="dashboard-content">
-    <div class="profile-header">
-        <h1 class="welcome-message">My Profile</h1>
-        <div class="profile-actions">
-            <a href="{{ route('profile.edit') }}" class="btn">Edit Profile</a>
-            <form action="{{ route('profile.delete') }}" method="POST">
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+        <h1 class="text-2xl font-semibold text-gray-800">Detail Profil Saya</h1>
+        <div class="flex gap-3 flex-wrap">
+            <a href="{{ route('profile.edit') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow transition">
+                Edit Profil
+            </a>
+            <form action="{{ route('profile.delete') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
-                    Delete Account
+                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg shadow transition">
+                    Hapus Akun
                 </button>
             </form>
         </div>
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success">
+        <div class="mb-6 p-4 bg-green-100 text-green-800 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
 
-    <div class="profile-info">
-        <div class="profile-avatar">
-            <div class="avatar-initial">
+    <div class="space-y-10">
+        <div class="flex items-center gap-5 flex-wrap text-center sm:text-left">
+            <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl font-bold">
                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
             </div>
-            <div class="avatar-details">
-                <h2>{{ Auth::user()->name }}</h2>
-                <p>{{ Auth::user()->username }}</p>
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800">{{ Auth::user()->name }}</h2>
+                <p class="text-gray-500">{{ Auth::user()->username }}</p>
             </div>
         </div>
 
-        <div class="account-details">
-            <h3>Account Information</h3>
-            <div class="details-grid">
-                <div class="detail-item">
-                    <span class="detail-label">Name</span>
-                    <span class="detail-value">{{ Auth::user()->name }}</span>
+        <div class="bg-gray-50 p-6 rounded-lg shadow">
+            <h3 class="text-lg font-semibold text-blue-700 mb-5">Informasi Akun</h3>
+            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2">
+                <div>
+                    <p class="text-sm text-gray-500">Nama</p>
+                    <p class="font-medium text-gray-800">{{ Auth::user()->name }}</p>
                 </div>
-                <div class="detail-item">
-                    <span class="detail-label">Email</span>
-                    <span class="detail-value">{{ Auth::user()->email }}</span>
+                <div>
+                    <p class="text-sm text-gray-500">Email</p>
+                    <p class="font-medium text-gray-800">{{ Auth::user()->email }}</p>
                 </div>
-                <div class="detail-item">
-                    <span class="detail-label">Account Created</span>
-                    <span class="detail-value">{{ Auth::user()->created_at->format('j F Y - H:i') }}</span>
+                <div>
+                    <p class="text-sm text-gray-500">Dibuat Pada</p>
+                    <p class="font-medium text-gray-800">{{ Auth::user()->created_at->format('j F Y - H:i') }}</p>
                 </div>
-                <div class="detail-item">
-                    <span class="detail-label">Last Updated</span>
-                    <span class="detail-value">{{ Auth::user()->updated_at->format('j F Y - H:i') }}</span>
+                <div>
+                    <p class="text-sm text-gray-500">Terakhir Di Update</p>
+                    <p class="font-medium text-gray-800">{{ Auth::user()->updated_at->format('j F Y - H:i') }}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    /* Profile Specific Styles */
-    .profile-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .profile-actions {
-        display: flex;
-        gap: 15px;
-    }
-
-    .profile-info {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .profile-avatar {
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-        gap: 20px;
-    }
-
-    .avatar-details h2 {
-        margin-bottom: 5px;
-        font-size: 1.5rem;
-    }
-
-    .avatar-details p {
-        color: var(--gray-color);
-    }
-
-    .account-details {
-        background: white;
-        border-radius: 8px;
-        padding: 25px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .account-details h3 {
-        color: var(--primary-color);
-        margin-bottom: 20px;
-        font-size: 1.3rem;
-    }
-
-    .details-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-    }
-
-    .detail-item {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .detail-label {
-        color: var(--gray-color);
-        font-size: 0.9rem;
-        margin-bottom: 5px;
-    }
-
-    .detail-value {
-        font-weight: 500;
-    }
-
-    @media (max-width: 576px) {
-        .profile-actions {
-            flex-direction: column;
-            width: 100%;
-        }
-        
-        .profile-actions .btn {
-            width: 100%;
-        }
-        
-        .profile-avatar {
-            flex-direction: column;
-            text-align: center;
-        }
-    }
-</style>
 @endsection

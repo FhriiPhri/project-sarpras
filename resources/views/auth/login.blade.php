@@ -1,17 +1,18 @@
 @extends('layouts.app')
 
 @section('title', 'Login')
+
 @section('content')
-<div class="auth-container">
-    <div class="auth-card">
-        <div class="auth-header">
-            <h2>Welcome Back</h2>
-            <p>Please login to continue</p>
+<div class="flex items-center justify-center px-4">
+    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Welcome Back</h2>
+            <p class="text-gray-600">Please login to continue</p>
         </div>
 
         @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="errors">
+            <div class="mb-4 bg-red-100 text-red-800 p-4 rounded-md">
+                <ul class="list-disc list-inside space-y-1 text-sm">
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -20,36 +21,42 @@
         @endif
 
         @if(session('success'))
-            <div class="alert alert-success">
+            <div class="mb-4 bg-green-100 text-green-800 p-4 rounded-md">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login.post') }}">
+        <form method="POST" action="{{ route('login.post') }}" class="space-y-5">
             @csrf
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required autofocus>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}"
+                    class="px-5 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required autofocus>
             </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input type="password" id="password" name="password"
+                    class="px-5 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
             </div>
 
-            <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center;">
-                    <input type="checkbox" id="remember" name="remember" style="margin-right: 8px;">
-                    <label for="remember" style="margin-bottom: 0;">Remember me</label>
-                </div>
-                <a href="#" style="color: var(--primary-color); text-decoration: none;">Forgot password?</a>
+            <div class="flex items-center justify-between text-sm">
+                <label class="flex items-center">
+                    <input type="checkbox" name="remember" class="mr-2">
+                    Remember me
+                </label>
+                <a href="#" class="text-blue-600 hover:underline">Forgot password?</a>
             </div>
 
-            <button type="submit" class="btn">Login</button>
+            <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md shadow transition">
+                Login
+            </button>
         </form>
 
-        <div class="auth-footer">
-            <p>Don't have an account? <a href="{{ route('register') }}">Sign Up</a></p>
+        <div class="mt-6 text-center text-sm text-gray-600">
+            Don't have an account?
+            <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Sign Up</a>
         </div>
     </div>
 </div>

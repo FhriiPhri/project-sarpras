@@ -10,6 +10,11 @@ use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        $users = User::all();
+        return view('dashboard', compact('users'));
+    }
     public function register()
     {
         return view('auth.register');
