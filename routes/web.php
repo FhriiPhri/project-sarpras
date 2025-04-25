@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\GetUserController;
 
 /*
 |----------------------------------------------------------------------
@@ -32,9 +35,14 @@ Route::middleware('auth')->group(function () {
 
 // Admin Dashboard Route (without middleware, but still can check role in controller)
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-Route::post('/adduser', [AuthController::class, 'addUser'])->name('user.post');
 
 // Default route
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
+
+Route::resource('kategori', KategoriController::class)->middleware('role:admin');
+Route::resource('barang', BarangController::class)->middleware('role:admin');
+
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+Route::resource('users', GetUserController::class);

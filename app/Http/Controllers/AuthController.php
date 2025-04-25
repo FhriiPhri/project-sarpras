@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use App\Models\Barang;
+use App\Models\Kategori;
 
 class AuthController extends Controller
 {
@@ -39,26 +41,6 @@ class AuthController extends Controller
         Auth::login($user);
 
         return redirect()->route('dashboard')->with('success', 'Registration successful!');
-    }
-
-    public function addUser(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        User::create([
-            'name' => $validated['name'],
-            'username' => $validated['username'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-            'role' => 'user',
-        ]);
-
-        return back()->with('success', 'User berhasil ditambahkan.');
     }
 
     public function login()
@@ -95,7 +77,13 @@ class AuthController extends Controller
     public function dashboard()
     {
         $users = User::all();
-        return view('dashboard', compact('users'));
+        $kategoris = Kategori::all(); // Pastikan model Kategori ada
+        $barangs = Barang::with('kategori')->get();
+        $totalUsers = User::count();
+        $totalKategori = Kategori::count();
+        $totalBarang = Barang::count();
+        $totalBarangRusak = Barang::where('kondisi', 'rusak')->count(); // pastikan kolom 'kondisi' benar
+        return view('dashboard', compact('users', 'kategoris', 'barangs', 'totalUsers', 'totalKategori', 'totalBarang', 'totalBarangRusak'));
     }
 
     public function logout(Request $request)

@@ -1,153 +1,72 @@
 @extends('layouts.app')
 
 @section('title', 'Dashboard')
+
 @section('content')
-
-<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h1 class="text-2xl font-semibold text-gray-800 mb-6">
-        Selamat Datang, {{ Auth::user()->name }}! 👋👋
+<div class="max-w-7xl mx-auto p-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        Selamat Datang, {{ Auth::user()->name }}! 👋
     </h1>
-    
-    <div class="mb-20">
-        <a href="{{ route('profile') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow transition">
-            Lihat Detail Profil
+
+    {{-- Ringkasan --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <a href="{{ url('users')}}">
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                    <i class="fas fa-users text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Total Users</p>
+                    <h3 class="text-xl font-bold">{{ $totalUsers }}</h3>
+                </div>
+            </div>
         </a>
-    </div>
-    
-    
-    <div class="mt-10">
-        <h2 class="text-4xl text-center font-semibold text-gray-800 mb-4">Seluruh User</h2>
-        <div class="mt-10 mb-5 flex justify-between items-center">
-            <button onclick="toggleModal('modalAddUser')" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg shadow">
-                + Tambah User
-            </button>
-        </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-300 text-sm">
-                <thead class="bg-gray-100 text-left">
-                    <tr>
-                        <th class="px-4 py-2 border-b">#</th>
-                        <th class="px-4 py-2 border-b">Nama</th>
-                        <th class="px-4 py-2 border-b">Username</th>
-                        <th class="px-4 py-2 border-b">Role</th>
-                        <th class="px-4 py-2 border-b">Email</th>
-                        <th class="px-4 py-2 border-b">Bergabung Pada</th>
-                        <th class="px-4 py-2 border-b">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $index => $user)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 border-b">{{ $index + 1 }}</td>
-                            <td class="px-4 py-2 border-b">{{ $user->name }}</td>
-                            <td class="px-4 py-2 border-b">{{ $user->username }}</td>
-                            <td class="px-4 py-2 border-b">{{ $user->role }}</td>
-                            <td class="px-4 py-2 border-b">{{ $user->email }}</td>
-                            <td class="px-4 py-2 border-b">{{ $user->created_at->format('j F Y - H.i') }} WIB</td>
-                            <td class="px-4 py-2 border-b">
-                                <div class="flex gap-2">
-                                    <button 
-                                        onclick="toggleModal('modalEditUser{{ $user->id }}')" 
-                                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded transition"
-                                    >
-                                        Edit
-                                    </button>
-                            
-                                    <form action="{{ route('profile.delete', $user->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button 
-                                            type="submit" 
-                                            class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded transition"
-                                            onclick="return confirm('Yakin ingin menghapus user ini?')"
-                                        >
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>                            
-                        </tr>
+        <a href="{{ route('kategori.index') }}">
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="bg-green-100 text-green-600 p-3 rounded-full">
+                    <i class="fas fa-list text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Total Kategori</p>
+                    <h3 class="text-xl font-bold">{{ $totalKategori }}</h3>
+                </div>
+            </div>
+        </a>
 
-                        <!-- Modal Edit User -->
-                        <div id="modalEditUser{{ $user->id }}" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
-                            <div class="bg-white p-6 rounded-lg w-full max-w-lg relative shadow-lg">
-                                <h2 class="text-xl font-semibold mb-4">Edit User</h2>
-                                <form action="{{ route('profile.update') }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="id" value="{{ $user->id }}">
-                                    
-                                    <input type="text" name="name" value="{{ $user->name }}" class="w-full mb-3 px-4 py-2 border rounded" placeholder="{{ $user->name }}" required>
-                                    <input type="text" name="username" value="{{ $user->username }}" class="w-full mb-3 px-4 py-2 border rounded" placeholder="{{ $user->username }}" required>
-                                    <input type="email" name="email" value="{{ $user->email }}" class="w-full mb-3 px-4 py-2 border rounded" placeholder="{{ $user->email }}" required>
-                                    <input type="password" name="password" placeholder="Password (opsional)" class="w-full mb-3 px-4 py-2 border rounded">
+        <a href="{{ route('barang.index') }}">
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="bg-yellow-100 text-yellow-600 p-3 rounded-full">
+                    <i class="fas fa-box text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Total Barang</p>
+                    <h3 class="text-xl font-bold">{{ $totalBarang }}</h3>
+                </div>
+            </div>
+        </a>
 
-                                    <div class="flex justify-end mt-4">
-                                        <button type="button" onclick="toggleModal('modalEditUser{{ $user->id }}')" class="px-4 py-2 mr-2 text-gray-600 hover:underline">Batal</button>
-                                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Update</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+            <div class="bg-purple-100 text-purple-600 p-3 rounded-full">
+                <i class="fas fa-warehouse text-xl"></i>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Barang Rusak</p>
+                <h3 class="text-xl font-bold">{{ $totalBarangRusak ?? 0 }}</h3>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Modal Tambah User -->
-<div id="modalAddUser" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-6 rounded-lg w-full max-w-lg relative shadow-lg">
-        <h2 class="text-xl font-semibold mb-4">Tambah User</h2>
-        <form action="{{ route('user.post') }}" method="POST">
-            @csrf
-
-            <div class="mb-3">
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                <input type="text" id="username" name="username" value="{{ old('username') }}"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="password" name="password"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-            </div>
-
-            <div class="mb-4">
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-            </div>
-
-            <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md shadow transition">
-                Register
-            </button>
-        </form>
+    {{-- Detail Admin Login --}}
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Profil <strong>{{ Auth::user()->name }}</strong></h2>
+        <ul class="text-gray-600 space-y-2">
+            <li><strong>Nama:</strong> {{ Auth::user()->name }}</li>
+            <li><strong>Email:</strong> {{ Auth::user()->email }}</li>
+            <li><strong>Role:</strong> {{ Auth::user()->role ?? 'admin' }}</li>
+            <li><strong>Terdaftar Sejak:</strong> {{ Auth::user()->created_at->format('d F Y') }}</li>
+            <li><strong>Pukul:</strong> {{ Auth::user()->created_at->format('H.i') }} WIB</li>
+        </ul>
     </div>
 </div>
-
-<!-- Script Modal Toggle -->
-<script>
-    function toggleModal(id) {
-        const el = document.getElementById(id);
-        el.classList.toggle('hidden');
-    }
-</script>
-
 @endsection
