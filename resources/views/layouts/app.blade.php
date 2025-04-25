@@ -18,29 +18,29 @@
 
     <!-- Header -->
     <header class="bg-white shadow sticky top-0 z-50">
-        <div class="container mx-auto px-5 py-4 flex justify-between items-center">
-            <a href="/dashboard" class="text-2xl font-bold text-blue-600">SarprasTBSystem</a>
-            <div class="flex items-center gap-4">
-                <a href="{{ route('profile') }}" class="duration-300 text-gray-800 hover:text-blue-600 font-medium">
-                    {{ Auth::user()->name ?? 'Guest' }}
-                </a>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="/dashboard" class="text-2xl font-bold text-blue-600 whitespace-nowrap">
+                SarprasTBSystem
+            </a>
+    
+            <div class="flex items-center gap-3">
                 @auth
-                    <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold shadow-md">
+                    <a href="{{ route('profile') }}" class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-sm">
                         {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                    </div>
+                    </a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="ml-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow transition">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded shadow text-sm sm:text-base transition whitespace-nowrap">
                             Logout
                         </button>
                     </form>
                 @endauth
             </div>
         </div>
-    </header>
+    </header>    
 
     <!-- Main Content -->
-    <main class="container mx-auto px-5 py-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         @yield('content')
     </main>
 
