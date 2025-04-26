@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PeminjamanSarprasController;
 
 /*
 |----------------------------------------------------------------------
@@ -49,4 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('kategori', KategoriController::class);
     Route::resource('users', UsersController::class);
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
+    // Peminjaman Sarana
+    Route::get('/peminjaman-sarana', [PeminjamanSarprasController::class, 'index'])->name('peminjaman-sarana.index');
+    Route::post('/peminjaman-sarana/{id}/approve', [PeminjamanSarprasController::class, 'approve'])->name('peminjaman-sarana.approve');
+    Route::post('/peminjaman-sarana/{id}/reject', [PeminjamanSarprasController::class, 'reject'])->name('peminjaman-sarana.reject');
+    Route::post('/peminjaman-sarana/{id}/confirm', [PeminjamanSarprasController::class, 'confirm'])->name('peminjaman-sarana.confirm');
+    Route::put('/peminjaman-sarana/{id}/return', [PeminjamanSarprasController::class, 'return'])->name('peminjaman-sarana.return');
+    Route::get('/peminjaman-sarana/report', [PeminjamanSarprasController::class, 'report'])->name('peminjaman-sarana.report');
 });

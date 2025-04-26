@@ -17,6 +17,29 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function loginApi(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('api-token')->plainTextToken;
+
+            return response()->json([
+                'token' => $token,
+                'user' => $user,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Email atau password salah.'
+        ], 401);
+    }
+
+
     public function loginPost(Request $request)
     {
         $credentials = $request->validate([
