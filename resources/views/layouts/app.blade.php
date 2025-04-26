@@ -14,18 +14,21 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="overflow-x-hidden bg-gray-100 text-gray-800">
 
     <!-- Header -->
-    <header class="bg-white shadow sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+    <header class="bg-white shadow sticky top-0 z-50 w-full left-0 right-0">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <a href="/dashboard" class="text-2xl font-bold text-blue-600 whitespace-nowrap">
                 SarprasTBSystem
             </a>
     
             <div class="flex items-center gap-3">
                 @auth
-                    <a href="{{ route('profile') }}" class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-sm">
+                    <a href="{{ route('users.index') }}" class="hover:text-blue-700 duration-300 text-black font-medium px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base transition">Users</a>
+                    <a href="{{ route('kategori.index') }}" class="hover:text-blue-700 duration-300 text-black font-medium px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base transition">Kategori</a>
+                    <a href="{{ route('barang.index') }}" class="hover:text-blue-700 duration-300 text-black font-medium px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base transition">Barang</a>
+                    <a href="{{ route(name: 'profile') }}" class="ml-8 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-sm">
                         {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                     </a>
                     <form action="{{ route('logout') }}" method="POST">

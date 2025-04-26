@@ -5,11 +5,6 @@
 @section('content')
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
     <!-- Back Button -->
-    <div class="mb-4">
-        <a href="{{ url()->previous() }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 p-3 rounded-full inline-flex items-center">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-    </div>
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-800">Daftar Kategori</h1>
         <a href="{{ route('kategori.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">

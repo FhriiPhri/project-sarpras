@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [AuthController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
     Route::delete('/profile/delete/{id}', [AuthController::class, 'deleteProfile'])->name('profile.delete');
+    Route::resource('kategori', KategoriController::class);
+    Route::resource('barang', BarangController::class);
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::resource('users', GetUserController::class);
 });
 
 // Admin Dashboard Route (without middleware, but still can check role in controller)
@@ -40,9 +44,3 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard'
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
-
-Route::resource('kategori', KategoriController::class)->middleware('role:admin');
-Route::resource('barang', BarangController::class)->middleware('role:admin');
-
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-Route::resource('users', GetUserController::class);

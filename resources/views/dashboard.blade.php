@@ -5,7 +5,7 @@
 @section('content')
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8">
-        Selamat Datang, {{ Auth::user()->name }}! 👋
+        Selamat Datang, {{ Auth::user()->name }}! 👋🏻👋🏻
     </h1>
 
     {{-- Ringkasan --}}
@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Total Users</p>
-                    <h3 class="text-lg sm:text-xl font-bold">{{ $totalUsers }}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold">{{ $totalUsers }} User</h3>
                 </div>
             </div>
         </a>
@@ -29,7 +29,7 @@
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Total Kategori</p>
-                    <h3 class="text-lg sm:text-xl font-bold">{{ $totalKategori }}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold">{{ $totalKategori }} Kategori</h3>
                 </div>
             </div>
         </a>
@@ -41,7 +41,7 @@
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Total Barang</p>
-                    <h3 class="text-lg sm:text-xl font-bold">{{ $totalBarang }}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold">{{ $totalBarang }} Barang</h3>
                 </div>
             </div>
         </a>
@@ -52,7 +52,7 @@
             </div>
             <div>
                 <p class="text-sm text-gray-500">Barang Rusak</p>
-                <h3 class="text-lg sm:text-xl font-bold">{{ $totalBarangRusak ?? 0 }}</h3>
+                <h3 class="text-lg sm:text-xl font-bold">{{ $totalBarangRusak ?? 0 }} Barang</h3>
             </div>
         </div>
     </div>

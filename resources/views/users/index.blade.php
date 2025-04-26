@@ -34,10 +34,11 @@
                     <td class="px-4 py-2 border-b text-center">{{ $index + 1 }}</td>
                     <td class="px-4 py-2 border-b">{{ $user->name }}</td>
                     <td class="px-4 py-2 border-b">{{ $user->email }}</td>
+                    <td class="px-4 py-2 border-b">{{ $user->role }}</td>
                     <td class="px-4 py-2 border-b text-center">
                         <div class="flex justify-center space-x-2">
                             <a href="{{ route('users.edit', $user->id) }}" 
-                               class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                               class="bg-green-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
                                 Edit
                             </a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" 
