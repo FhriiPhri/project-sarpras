@@ -39,14 +39,14 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [AuthController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
     Route::delete('/profile/delete/{id}', [AuthController::class, 'deleteProfile'])->name('profile.delete');
-    Route::resource('kategori', KategoriController::class);
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('barang', BarangController::class);
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::resource('kategori', KategoriController::class);
     Route::resource('users', UsersController::class);
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 });
