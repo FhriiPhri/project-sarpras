@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\GetUserController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UsersController;
 
 /*
 |----------------------------------------------------------------------
@@ -17,15 +18,28 @@ use App\Http\Controllers\GetUserController;
 |
 */
 
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    } else {
+        return view('welcome');
+    }
+});
+
+
 // Auth Routes
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'registerPost'])->name('register.post');
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
+    Route::get('/sarprastb', function () {
+        return view('welcome');
+    });
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [AuthController::class, 'editProfile'])->name('profile.edit');
@@ -34,13 +48,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('kategori', KategoriController::class);
     Route::resource('barang', BarangController::class);
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-    Route::resource('users', GetUserController::class);
-});
-
-// Admin Dashboard Route (without middleware, but still can check role in controller)
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-
-// Default route
-Route::get('/', function () {
-    return redirect()->route('dashboard');
+    Route::resource('users', UsersController::class);
 });

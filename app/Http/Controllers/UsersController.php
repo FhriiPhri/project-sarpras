@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class GetUserController extends Controller
+class UsersController extends Controller
 {
     public function index()
     {
@@ -68,5 +68,13 @@ class GetUserController extends Controller
         Auth::login($user);
 
         return redirect()->route('users.index')->with('success', 'Registration successful!');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

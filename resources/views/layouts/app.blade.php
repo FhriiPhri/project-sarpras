@@ -19,7 +19,7 @@
     <!-- Header -->
     <header class="bg-white shadow sticky top-0 z-50 w-full left-0 right-0">
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="/dashboard" class="text-2xl font-bold text-blue-600 whitespace-nowrap">
+            <a href="/" class="text-2xl font-bold text-blue-600 whitespace-nowrap">
                 SarprasTBSystem
             </a>
     

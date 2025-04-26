@@ -11,38 +11,7 @@ use App\Models\Barang;
 use App\Models\Kategori;
 
 class AuthController extends Controller
-{
-    public function index()
-    {
-        $users = User::all();
-        return view('dashboard', compact('users'));
-    }
-    public function register()
-    {
-        return view('auth.register');
-    }
-
-    public function registerPost(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        Auth::login($user);
-
-        return redirect()->route('dashboard')->with('success', 'Registration successful!');
-    }
-
+{   
     public function login()
     {
         return view('auth.login');
@@ -77,13 +46,11 @@ class AuthController extends Controller
     public function dashboard()
     {
         $users = User::all();
-        $kategoris = Kategori::all(); // Pastikan model Kategori ada
-        $barangs = Barang::with('kategori')->get();
         $totalUsers = User::count();
         $totalKategori = Kategori::count();
         $totalBarang = Barang::count();
         $totalBarangRusak = Barang::where('kondisi', 'rusak')->count(); // pastikan kolom 'kondisi' benar
-        return view('dashboard', compact('users', 'kategoris', 'barangs', 'totalUsers', 'totalKategori', 'totalBarang', 'totalBarangRusak'));
+        return view('dashboard', compact('users', 'totalUsers', 'totalKategori', 'totalBarang', 'totalBarangRusak'));
     }
 
     public function logout(Request $request)
@@ -129,27 +96,9 @@ class AuthController extends Controller
         return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
 
-    public function deleteProfile($id)
-    {
-        // Pastikan hanya admin yang bisa menghapus user lain
-        if (Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized');
-        }
-
-        // Cegah admin menghapus dirinya sendiri lewat dashboard
-        if (Auth::id() == $id) {
-            return back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri dari sini.');
-        }
-
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        return back()->with('success', 'User berhasil dihapus.');
-    }
-
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['login', 'loginPost', 'register', 'registerPost']]);
-        $this->middleware('guest')->only('login', 'register'); // Mengambil middleware guest
+        $this->middleware('guest')->only('login', 'register');
     }
 }
