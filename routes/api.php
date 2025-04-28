@@ -27,3 +27,11 @@ Route::get('/users', function () {
 Route::get('/kategori', function () {
     return response()->json(Kategori::all());
 });
+
+
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::get('/barangs', [App\Http\Controllers\API\BarangController::class,'index']);
+    Route::post('/pinjem', [App\Http\Controllers\PeminjamanSarprasController::class, 'store']);
+});

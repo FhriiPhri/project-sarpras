@@ -45,8 +45,8 @@
                     <td class="px-4 py-2 border-b">{{ $item->barang->nama_barang }}</td>
                     <td class="px-4 py-2 border-b text-center">{{ $item->jumlah }}</td>
                     <td class="px-4 py-2 border-b">{{ Str::limit($item->tujuan, 20) }}</td>
-                    <td class="px-4 py-2 border-b">{{ $item->tanggal_pinjam->format('d/m/Y') }}</td>
-                    <td class="px-4 py-2 border-b">{{ $item->tanggal_kembali->format('d/m/Y') }}</td>
+                    <td class="px-4 py-2 border-b">{{ $item->tanggal_pinjam}} </td>
+                    <td class="px-4 py-2 border-b">{{ $item->tanggal_kembali}}</td>
                     <td class="px-4 py-2 border-b">
                         <span class="inline-block px-2 py-1 text-xs font-semibold rounded 
                             @if($item->status === 'menunggu') bg-yellow-100 text-yellow-800

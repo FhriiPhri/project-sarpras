@@ -8,7 +8,7 @@ class PeminjamanSarpras extends Model
 {
     protected $table = 'peminjaman_sarana';
     protected $fillable = [
-        'user_id', 'barang_id', 'approver_id', 'tanggal_pinjam', 
+        'user_id', 'barang_id', 'tanggal_pinjam', 
         'tanggal_kembali', 'tanggal_dikembalikan', 'jumlah', 'tujuan',
         'status', 'catatan'
     ];
@@ -21,10 +21,5 @@ class PeminjamanSarpras extends Model
     public function barang()
     {
         return $this->belongsTo(Barang::class);
-    }
-
-    public function approver()
-    {
-        return $this->belongsTo(User::class, 'approver_id');
     }
 }

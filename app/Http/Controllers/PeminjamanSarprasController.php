@@ -14,9 +14,10 @@ class PeminjamanSarprasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'barang_id' => 'required|exists:barang,id',
+            'user_id' => 'required|exists:users,id',
+            'barang_id' => 'required|exists:barangs,id',
             'tanggal_pinjam' => 'required|date',
-            'tanggal_kembali' => 'required|date|after:tanggal_pinjam',
+            'tanggal_kembali' => 'nullable|date|after:tanggal_pinjam',
             'jumlah' => 'required|integer|min:1',
             'tujuan' => 'required|string|max:255'
         ]);
@@ -68,7 +69,7 @@ class PeminjamanSarprasController extends Controller
     // Halaman daftar peminjaman untuk admin
     public function index()
     {
-        $peminjaman = PeminjamanSarpras::with(['user', 'barang', 'approver'])
+        $peminjaman = PeminjamanSarpras::with(['user', 'barang'])
             ->orderBy('created_at', 'desc')
             ->get();
             
@@ -87,10 +88,9 @@ class PeminjamanSarprasController extends Controller
         }
 
         $peminjaman->status = 'disetujui';
-        $peminjaman->approver_id = auth()->id();
-        $peminjaman->save();
+            $peminjaman->save();
 
-        return redirect()->route('peminjaman-Sarpras.index')
+        return redirect()->route('peminjaman-sarana.index')
             ->with('success', 'Peminjaman berhasil disetujui');
     }
 
@@ -129,7 +129,7 @@ class PeminjamanSarprasController extends Controller
         $peminjaman->status = 'dipinjam';
         $peminjaman->save();
 
-        return redirect()->route('peminjaman-Sarpras.index')
+        return redirect()->route('peminjaman-sarana.index')
             ->with('success', 'Peminjaman berhasil dikonfirmasi');
     }
 
@@ -149,7 +149,7 @@ class PeminjamanSarprasController extends Controller
         }
 
         // Update status peminjaman
-        $peminjaman->status = $request->kondisi === 'baik' ? 'dikembalikan' : $request->kondisi;
+        $peminjaman->status = 'dikembalikan';
         $peminjaman->tanggal_dikembalikan = now();
         $peminjaman->catatan = $request->catatan;
         $peminjaman->save();
@@ -166,7 +166,7 @@ class PeminjamanSarprasController extends Controller
         
         $barang->save();
 
-        return redirect()->route('peminjaman-Sarpras.index')
+        return redirect()->route('peminjaman-sarana.index')
             ->with('success', 'Pengembalian berhasil dicatat');
     }
 

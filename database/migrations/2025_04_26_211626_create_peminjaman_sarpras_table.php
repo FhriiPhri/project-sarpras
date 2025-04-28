@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained(); // Peminjam
             $table->foreignId('barang_id')->constrained(); // Sarana yang dipinjam
-            $table->foreignId('approver_id')->nullable()->constrained('users'); // Yang menyetujui
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
             $table->date('tanggal_dikembalikan')->nullable();
