@@ -4,22 +4,20 @@
 @section('content')
 
 <div class="max-w-4xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-md">
-    <!-- Back Button -->
-    <div class="mb-4">
-        <a href="{{ route('dashboard') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 sm:p-3 rounded-full inline-flex items-center transition">
-            <i class="fas fa-arrow-left text-sm sm:text-base"></i>
+    <!-- Header Section -->
+    <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+        <div class="flex items-center gap-4">
+            <a href="{{ route('dashboard') }}" class="transition duration-300 ease-in-out hover:bg-gray-300 text-gray-700 p-2 sm:p-3 rounded-full inline-flex items-center transition">
+                <i class="fas fa-arrow-left text-sm sm:text-base"></i>
+            </a>
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-800">Detail Profil Admin</h1>
+        </div>
+    
+        <a href="{{ route('profile.edit') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-lg shadow transition text-center">
+            Edit Profil Admin
         </a>
     </div>
-
-    <!-- Header Section -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <h1 class="text-xl sm:text-2xl font-semibold text-gray-800">Detail Profil Saya</h1>
-        <div class="w-full sm:w-auto">
-            <a href="{{ route('profile.edit') }}" class="block sm:inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-lg shadow transition text-center w-full sm:w-auto">
-                Edit Profil
-            </a>
-        </div>
-    </div>
+    
 
     <!-- Success Message -->
     @if(session('success'))
@@ -37,13 +35,13 @@
             </div>
             <div>
                 <h2 class="text-lg sm:text-xl font-semibold text-gray-800">{{ Auth::user()->name }}</h2>
-                <p class="text-gray-500 text-sm sm:text-base">{{ Auth::user()->username }}</p>
+                <p class="text-gray-500 text-sm sm:text-base">{{ Auth::user()->email }}</p>
             </div>
         </div>
 
         <!-- Account Information -->
         <div class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow transition duration-300 ease-in-out hover:shadow-lg">
-            <h3 class="text-base sm:text-lg font-semibold text-blue-700 mb-4 sm:mb-5">Informasi Akun</h3>
+            <h3 class="text-base sm:text-lg font-semibold text-blue-700 mb-4 sm:mb-5">Informasi Admin</h3>
             <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
                 <div>
                     <p class="text-xs sm:text-sm text-gray-500">Nama</p>

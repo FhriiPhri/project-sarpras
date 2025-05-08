@@ -33,12 +33,15 @@
             </thead>
             <tbody>
                 @foreach($barangs as $index => $barang)
-                <tr class="hover:bg-gray-50">
+                <tr class="hover:bg-gray-50 cursor-pointer"
+                    onclick="window.location='{{ route(name: 'barang.show', parameters: $barang->id) }}'">
                     <td class="px-2 sm:px-4 py-2 border-b">{{ $index + 1 }}</td>
                     <td class="px-2 sm:px-4 py-2 border-b hidden sm:table-cell text-center">
                         @if($barang->gambar)
+                        <a href="{{ asset('storage/' . $barang->gambar) }}" target="_blank">
                             <img src="{{ asset('storage/' . $barang->gambar) }}" alt="{{ $barang->nama_barang }}" 
-                                 class="w-12 h-12 sm:w-16 sm:h-16 object-cover mx-auto rounded">
+                                 class="w-12 h-12 sm:w-16 sm:h-16 object-cover mx-auto rounded hover:opacity-80 transition">
+                        </a>
                         @else
                             <span class="text-gray-400">-</span>
                         @endif
@@ -79,7 +82,7 @@
                     </td>
                     <td class="px-2 sm:px-4 py-2 border-b">
                         <div class="flex flex-col sm:flex-row justify-center gap-2">
-                            <a href="{{ route('barang.edit', $barang->id) }}" 
+                            <a href="{{ route(name: 'barang.edit', parameters: $barang->id) }}" 
                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-center text-sm">
                                 Edit
                             </a>

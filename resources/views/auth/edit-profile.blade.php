@@ -4,13 +4,13 @@
 @section('content')
 
 <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-    <div class="mb-4">
-        <a href="{{ url()->previous() }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 p-3 rounded-full inline-flex items-center">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-    </div>
-    <div class="flex justify-between items-center mb-8 flex-wrap gap-4">
-        <h1 class="text-2xl font-semibold text-gray-800">Edit Profil</h1>
+    <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+        <div class="flex items-center gap-4">
+            <a href="{{ route('profile') }}" class="transition duration-300 ease-in-out hover:bg-gray-300 text-gray-700 p-2 sm:p-3 rounded-full inline-flex items-center transition">
+                <i class="fas fa-arrow-left text-sm sm:text-base"></i>
+            </a>
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-800">Edit Profil Admin</h1>
+        </div>
     </div>
 
     @if($errors->any())

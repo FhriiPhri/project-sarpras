@@ -74,7 +74,7 @@ class AuthController extends Controller
         $totalBarang = Barang::count();
         $totalBarangRusak = Barang::where('kondisi', 'rusak')->count(); // pastikan kolom 'kondisi' benar
         return view('dashboard', compact('users', 'totalUsers', 'totalKategori', 'totalBarang', 'totalBarangRusak'));
-    }
+    }   
 
     public function logout(Request $request)
     {

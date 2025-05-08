@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Kategori;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::get('/kategori', function () {
 });
 
 
-Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'loginApi']);
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('/barangs', [App\Http\Controllers\API\BarangController::class,'index']);

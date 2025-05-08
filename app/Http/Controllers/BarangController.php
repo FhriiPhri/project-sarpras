@@ -47,8 +47,9 @@ class BarangController extends Controller
             ->with('success', 'Barang berhasil ditambahkan');
     }
 
-    public function show(Barang $barang)
+    public function show($id)
     {
+        $barang = Barang::with('kategori')->findOrFail($id);
         return view('barang.show', compact('barang'));
     }
 

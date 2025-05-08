@@ -42,7 +42,8 @@
         <div class="mb-4">
             <label class="block text-gray-700">Stok</label>
             <input type="number" name="stok" value="{{ old('stok', $barang->stok) }}"
-                   class="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring" required>
+            class="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring"
+            step="1" min="0" required>
         </div>
 
         <div class="mb-4">
