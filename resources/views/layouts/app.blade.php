@@ -38,6 +38,7 @@
                         <a href="{{ route('users.index') }}" class="hover:text-blue-700 duration-300 text-black font-medium px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base transition">Users</a>
                         <a href="{{ route('kategori.index') }}" class="hover:text-blue-700 duration-300 text-black font-medium px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base transition">Kategori</a>
                         <a href="{{ route('barang.index') }}" class="hover:text-blue-700 duration-300 text-black font-medium px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base transition">Barang</a>
+                        <a href="{{ route('peminjaman-sarana.index') }}" class="hover:text-blue-700 duration-300 text-black font-medium px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base transition">Peminjaman</a>
                         <a href="{{ route(name: 'profile') }}" class="ml-8 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-sm">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </a>
